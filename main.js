@@ -17,8 +17,17 @@ camera.position.setZ(30);
 
 
 const geometry = new THREE.TorusGeometry(5, 2, 16, 100);
-const material = new THREE.MeshStandardMaterial({ color: 0xff6347});
+const geometry1 = new THREE.TorusGeometry(10, 2, 16, 100);
+const geometry2 = new THREE.TorusGeometry(15, 2, 16, 100);
+
+const material = new THREE.MeshStandardMaterial({ color: 0xf542f5});
+const material1 = new THREE.MeshStandardMaterial({ color: 0x42f5ec});
+const material2 = new THREE.MeshStandardMaterial({ color: 0x42f542});
+
 const torus = new THREE.Mesh(geometry, material);
+const torus1 = new THREE.Mesh(geometry1, material1);
+const torus2 = new THREE.Mesh(geometry2, material2);
+
 
 const pointlight = new THREE.PointLight(0xffffff);
 pointlight.position.set(25, 25, 25);
@@ -50,12 +59,16 @@ Array(5000).fill().forEach(addStar);
 //const spaceTexture = new THREE.TextureLoader().load('bg.jpg');
 //scene.background = spaceTexture;
 
-scene.add(torus);
+scene.add(torus, torus1, torus2);
 
 function animate(){
   requestAnimationFrame(animate);
   torus.rotation.x += 0.01;
   torus.rotation.y += 0.01;
+  torus1.rotation.x += 0.02;
+  torus1.rotation.y += 0.02;
+  torus2.rotation.x += 0.03;
+  torus2.rotation.y += 0.03;
   controls.update();
   renderer.render(scene, camera);
   
