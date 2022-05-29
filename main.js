@@ -5,7 +5,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 1000);
 
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg')
@@ -13,12 +13,14 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(30);
+camera.position.setZ(90);
+camera.position.setX(90);
+camera.position.setY(0);
 
+const geometry = new THREE.TorusGeometry(40, 3, 2, 100);
+const geometry1 = new THREE.TorusGeometry(40, 3, 2, 100);
+const geometry2 = new THREE.TorusGeometry(40, 0, 16, 100);
 
-const geometry = new THREE.TorusGeometry(5, 2, 16, 100);
-const geometry1 = new THREE.TorusGeometry(10, 2, 16, 100);
-const geometry2 = new THREE.TorusGeometry(15, 2, 16, 100);
 
 const material = new THREE.MeshStandardMaterial({ color: 0xf542f5});
 const material1 = new THREE.MeshStandardMaterial({ color: 0x42f5ec});
@@ -36,12 +38,12 @@ const ambientlight = new THREE.AmbientLight(0xffffff);
 scene.add(pointlight, ambientlight);
 
 
-const lightHelper = new THREE.PointLightHelper(pointlight)
+ const lightHelper = new THREE.PointLightHelper(pointlight)
 const gridHelper = new THREE.GridHelper(200, 50);
 scene.add(lightHelper, gridHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
-
+/*
 function addStar(){
   const geometry = new THREE.SphereGeometry(0.25, 24, 24);
   const material = new THREE.MeshStandardMaterial({ color: 0xffffff});
@@ -52,7 +54,7 @@ function addStar(){
   scene.add(star)
 }
 
-Array(5000).fill().forEach(addStar);
+Array(5000).fill().forEach(addStar); */
 
 
 //Add Backgrounds
@@ -61,14 +63,24 @@ Array(5000).fill().forEach(addStar);
 
 scene.add(torus, torus1, torus2);
 
+torus.rotation.x = 180;
+torus.rotation.y = 90 ;
+
+torus1.rotation.x = 90;
+torus1.rotation.y = 180 ;
+
+
+
+
+
 function animate(){
   requestAnimationFrame(animate);
-  torus.rotation.x += 0.01;
-  torus.rotation.y += 0.01;
-  torus1.rotation.x += 0.02;
-  torus1.rotation.y += 0.02;
-  torus2.rotation.x += 0.03;
-  torus2.rotation.y += 0.03;
+  torus.rotation.x += 0.00;
+  torus.rotation.y += 0.02; //1
+  torus1.rotation.x += 0.00;
+  torus1.rotation.y += 0.02;  //2 
+
+  
   controls.update();
   renderer.render(scene, camera);
   
